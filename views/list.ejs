@@ -1,0 +1,21 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+</head>
+<body>
+    <h1>It's a <%= typeOfDay %> !</h1>
+
+    <ul>
+        <% for (var i=0; i<listOfItems1.length; i++) { %>
+            <li><%= listOfItems1[i] %></li>
+        <% } %>
+    </ul>
+    <form action="/" method="post">
+        <input type="text" name="listItem" id="">
+        <button type="submit">Add to list</button>
+    </form>
+</body>
+</html>
