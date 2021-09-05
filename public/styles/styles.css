@@ -56,10 +56,22 @@ form {
   margin-left: 20px;
 }
 
-button {
+#submit_button {
   min-height: 50px;
   width: 50px;
   border-radius: 50%;
+  border-color: transparent;
+  background-color: #ff0062;
+  color: #fff;
+  font-size: 30px;
+  padding-bottom: 6px;
+  border-width: 0;
+}
+
+#clear_button {
+  height: 50px;
+  width: 250px;
+  /* border-radius: %; */
   border-color: transparent;
   background-color: #ff0062;
   color: #fff;

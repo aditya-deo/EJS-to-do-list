@@ -1,5 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
+mongoose.connect("mongodb://localhost:27017/todolistDB");
+
 
 
 const app = express();
@@ -7,30 +11,51 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
 
-var options = {
-    weekday : "long",
-    day : "numeric",
-    month : "long"
-};
 
-var today = new Date();
 
-var day = today.toLocaleDateString("en-US", options);
+const itemSchema = new mongoose.Schema({
+    name: String
+});
 
-var listOfItems = [];
-var noOfItems = 0;
+const Item = mongoose.model('item', itemSchema);
+
 
 
 app.get("/", function(req, res){
     // noOfItems = listOfItems.length;
-    res.render('list', {typeOfDay : day, listOfItems1 : listOfItems});
+
+    Item.find(function(err,items){
+        if(err){
+            console.log(err);
+        }
+        else{
+            res.render('list', {typeOfDay : "Today", listOfItems1 : items});
+        }
+    })
+    
+    
 });
 
 
+
 app.post("/", function(req,res){
-    listOfItems.push(req.body.listItem);
+    const itemToAdd = new Item({
+        name: req.body.listItem
+    })
+    itemToAdd.save();
+    
     res.redirect("/");
 })
+
+
+app.post("/clear", function(req, res){
+    Item.deleteMany(function(err){
+        if(err){
+            console.log("Couldn't clear the To-do List. Sorry.")
+        }
+    });  
+    res.redirect('/');
+});
 
 
 app.listen(3000, function(){
